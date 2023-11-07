@@ -1,200 +1,203 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Menti Viewer</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-            }
-            h1 {
-                text-align: center;
-                margin-top: 50px;
-            }
-            form {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-top: 50px;
-            }
-            label {
-                font-size: 20px;
-                margin-bottom: 20px;
-            }
-            input[type="text"] {
-                font-size: 20px;
-                padding: 10px;
-                border-radius: 5px;
-                border: none;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                width: 300px;
-                text-align: center;
-            }
-            button[type="submit"] {
-                font-size: 20px;
-                padding: 10px 20px;
-                border-radius: 5px;
-                border: none;
-                background-color: #007bff;
-                color: #fff;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
-            button[type="submit"]:hover {
-                background-color: #0062cc;
-            }
-            #menti-container {
-                display: none;
-                margin-top: 50px;
-                text-align: center;
-            }
-            #menti-name {
-                font-size: 30px;
-                margin-bottom: 20px;
-            }
-            #prev-slide,
-            #next-slide {
-                font-size: 20px;
-                padding: 10px 20px;
-                border-radius: 5px;
-                border: none;
-                background-color: #007bff;
-                color: #fff;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
-            #prev-slide[disabled],
-            #next-slide[disabled] {
-                background-color: #ccc;
-                cursor: not-allowed;
-            }
-            #prev-slide:hover,
-            #next-slide:hover {
-                background-color: #0062cc;
-            }
-            #menti-image {
-                margin-top: 20px;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            }
-            #menti-choices {
-                margin-top: 20px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            #menti-choices div {
-                font-size: 20px;
-                padding: 10px 20px;
-                border-radius: 5px;
-                border: 1px solid #007bff;
-                margin: 10px;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
-            #menti-choices div:hover {
-                background-color: #007bff;
-                color: #fff;
-            }
-            .hidden {
-                display: none;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Menti Viewer</h1>
-        <form id="menti-form">
-            <label for="menti-code">Enter Menti Code:</label>
-            <input type="text" id="menti-code" name="menti-code" required />
-            <button type="submit">Submit</button>
-        </form>
-        <div id="menti-container">
-            <h2 id="menti-name"></h2>
-            <button id="prev-slide" disabled>Previous</button>
-            <button id="next-slide">Next</button>
-            <br />
-            <br />
-            <img id="menti-image" src="" alt="" width="50%" height="50%" />
-            <div id="menti-choices"></div>
-        </div>
-        <script>
-            const form = document.getElementById("menti-form");
-            const container = document.getElementById("menti-container");
-            const nameEl = document.getElementById("menti-name");
-            const imageEl = document.getElementById("menti-image");
-            const choicesEl = document.getElementById("menti-choices");
-            const prevBtn = document.getElementById("prev-slide");
-            const nextBtn = document.getElementById("next-slide");
-            let currentSlide = 0;
-            let slides = [];
+  <head>
+    <title>Menti Viewer</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+      }
+      label {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+      input[type="text"] {
+        font-size: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        width: 300px;
+        text-align: center;
+      }
+      button[type="submit"] {
+        font-size: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button[type="submit"]:hover {
+        background-color: #0062cc;
+      }
+      #menti-container {
+        display: none;
+        margin-top: 50px;
+        text-align: center;
+      }
+      #menti-name {
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+      #prev-slide,
+      #next-slide {
+        font-size: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      #prev-slide[disabled],
+      #next-slide[disabled] {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      #prev-slide:hover,
+      #next-slide:hover {
+        background-color: #0062cc;
+      }
+      #menti-image {
+        margin-top: 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      }
+      #menti-choices {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      #menti-choices div {
+        font-size: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid #007bff;
+        margin: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      #menti-choices div:hover {
+        background-color: #007bff;
+        color: #fff;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Menti Viewer</h1>
+    <form id="menti-form">
+      <label for="menti-code">Enter Menti Code:</label>
+      <input type="text" id="menti-code" name="menti-code" required />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="menti-container">
+      <h2 id="menti-name"></h2>
+      <button id="prev-slide" disabled>Previous</button>
+      <button id="next-slide">Next</button>
+      <br />
+      <br />
+      <img id="menti-image" src="" alt="" width="50%" height="50%" />
+      <div id="menti-choices"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        const form = $("#menti-form");
+        const container = $("#menti-container");
+        const nameEl = $("#menti-name");
+        const imageEl = $("#menti-image");
+        const choicesEl = $("#menti-choices");
+        const prevBtn = $("#prev-slide");
+        const nextBtn = $("#next-slide");
+        let currentSlide = 0;
+        let slides = [];
 
-            form.addEventListener("submit", async (event) => {
-                event.preventDefault();
-                const code = document.getElementById("menti-code").value;
-                const response = await fetch(`/menti/${code}`);
-                const data = await response.json();
-                nameEl.textContent = data.name;
-                imageEl.src = data.slides[currentSlide].image;
-                if (data.slides[currentSlide].type === "quiz") {
-                    const choices = data.slides[currentSlide].choices;
-                    choicesEl.innerHTML = "";
-                    choices.forEach((choice) => {
-                        const choiceEl = document.createElement("div");
-                        choiceEl.textContent = choice;
-                        choicesEl.appendChild(choiceEl);
-                    });
-                } else {
-                    choicesEl.innerHTML = "";
-                }
-                slides = data.slides;
-                container.style.display = "block";
-                form.classList.add("hidden");
-                if (slides.length > 1) {
-                    nextBtn.disabled = false;
-                }
+        form.on("submit", async (event) => {
+          event.preventDefault();
+          const code = $("#menti-code").val();
+          const response = await fetch(`/menti/${code}`);
+          const data = await response.json();
+          nameEl.text(data.name);
+          imageEl.attr("src", data.slides[currentSlide].image);
+          if (data.slides[currentSlide].type === "quiz") {
+            const choices = data.slides[currentSlide].choices;
+            choicesEl.html("");
+            choices.forEach((choice) => {
+              const choiceEl = $("<div></div>");
+              choiceEl.text(choice);
+              choicesEl.append(choiceEl);
             });
+          } else {
+            choicesEl.html("");
+          }
+          slides = data.slides;
+          container.css("display", "block");
+          form.addClass("hidden");
+          if (slides.length > 1) {
+            nextBtn.prop("disabled", false);
+          }
+        });
 
-            prevBtn.addEventListener("click", () => {
-                currentSlide--;
-                if (currentSlide === 0) {
-                    prevBtn.disabled = true;
-                }
-                nextBtn.disabled = false;
-                imageEl.src = slides[currentSlide].image;
-                if (slides[currentSlide].type === "quiz") {
-                    const choices = slides[currentSlide].choices;
-                    choicesEl.innerHTML = "";
-                    choices.forEach((choice) => {
-                        const choiceEl = document.createElement("div");
-                        choiceEl.textContent = choice;
-                        choicesEl.appendChild(choiceEl);
-                    });
-                } else {
-                    choicesEl.innerHTML = "";
-                }
+        prevBtn.on("click", () => {
+          currentSlide--;
+          if (currentSlide === 0) {
+            prevBtn.prop("disabled", true);
+          }
+          nextBtn.prop("disabled", false);
+          imageEl.attr("src", slides[currentSlide].image);
+          if (slides[currentSlide].type === "quiz") {
+            const choices = slides[currentSlide].choices;
+            choicesEl.html("");
+            choices.forEach((choice) => {
+              const choiceEl = $("<div></div>");
+              choiceEl.text(choice);
+              choicesEl.append(choiceEl);
             });
+          } else {
+            choicesEl.html("");
+          }
+        });
 
-            nextBtn.addEventListener("click", () => {
-                currentSlide++;
-                if (currentSlide === slides.length - 1) {
-                    nextBtn.disabled = true;
-                }
-                prevBtn.disabled = false;
-                imageEl.src = slides[currentSlide].image;
-                if (slides[currentSlide].type === "quiz") {
-                    const choices = slides[currentSlide].choices;
-                    choicesEl.innerHTML = "";
-                    choices.forEach((choice) => {
-                        const choiceEl = document.createElement("div");
-                        choiceEl.textContent = choice;
-                        choicesEl.appendChild(choiceEl);
-                    });
-                } else {
-                    choicesEl.innerHTML = "";
-                }
+        nextBtn.on("click", () => {
+          currentSlide++;
+          if (currentSlide === slides.length - 1) {
+            nextBtn.prop("disabled", true);
+          }
+          prevBtn.prop("disabled", false);
+          imageEl.attr("src", slides[currentSlide].image);
+          if (slides[currentSlide].type === "quiz") {
+            const choices = slides[currentSlide].choices;
+            choicesEl.html("");
+            choices.forEach((choice) => {
+              const choiceEl = $("<div></div>");
+              choiceEl.text(choice);
+              choicesEl.append(choiceEl);
             });
-        </script>
-    </body>
+          } else {
+            choicesEl.html("");
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
