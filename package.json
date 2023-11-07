@@ -1,13 +1,13 @@
 {
   "name": "mentiman",
   "version": "1.0.0",
-  "description": "Menti slides",
-  "main": "index.js",
+  "description": "A FOSS Menti slides viewer",
+  "main": "server.js",
   "scripts": {
     "dev": "npx nodemon"
   },
   "author": "",
-  "license": "ISC",
+  "license": "",
   "dependencies": {
     "@fastify/static": "^6.12.0",
     "axios": "^1.6.0",

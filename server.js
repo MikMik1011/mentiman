@@ -49,7 +49,7 @@ fastify.get("/menti/:code", async (request, reply) => {
 
 fastify.get("/", (request, reply) => reply.sendFile("index.html"));
 
-fastify.listen(3000, (err, address) => {
+fastify.listen({ port: 3000, host: "0.0.0.0" }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
