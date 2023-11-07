@@ -112,6 +112,7 @@
     </form>
     <div id="menti-container">
       <h2 id="menti-name"></h2>
+      <h3 id="slide-title"></h3>
       <button id="prev-slide" disabled>Previous</button>
       <button id="next-slide">Next</button>
       <br />
@@ -125,6 +126,7 @@
         const form = $("#menti-form");
         const container = $("#menti-container");
         const nameEl = $("#menti-name");
+        const titleEl = $("#slide-title");
         const imageEl = $("#menti-image");
         const choicesEl = $("#menti-choices");
         const prevBtn = $("#prev-slide");
@@ -138,6 +140,7 @@
           currentSlide = slideIndex;
           prevBtn.prop("disabled", currentSlide === 0);
           nextBtn.prop("disabled", currentSlide === slides.length - 1);
+          titleEl.text(slides[currentSlide].title);
           imageEl.attr("src", slides[currentSlide].image);
           if (slides[currentSlide].type === "quiz") {
             const choices = slides[currentSlide].choices;
