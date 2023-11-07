@@ -7,12 +7,12 @@ fastify.register(require("@fastify/static"), {
     prefix: "/static/",
   });
 
-const transposeResponse = (response) => {
-  let transposed = {};
-  transposed.voteKey = response.vote_key;
-  transposed.name = response.name;
+const transformResponse = (response) => {
+  let transformed = {};
+  transformed.voteKey = response.vote_key;
+  transformed.name = response.name;
 
-  transposed.slides = [];
+  transformed.slides = [];
 
   response.questions.map((value) => {
     let slide = {
@@ -29,10 +29,10 @@ const transposeResponse = (response) => {
       slide.choices = choices;
     }
 
-    transposed.slides.push(slide);
+    transformed.slides.push(slide);
   });
   
-  return transposed;
+  return transformed;
 };
 
 fastify.get("/menti/:code", async (request, reply) => {
@@ -40,8 +40,8 @@ fastify.get("/menti/:code", async (request, reply) => {
   const url = `https://www.menti.com/core/vote-ids/${code}/series`;
   try {
     let response = await axios.get(url);
-    let transposed = transposeResponse(response.data);
-    reply.send(transposed);
+    let transformed = transformResponse(response.data);
+    reply.send(transformed);
   } catch (error) {
     reply.send(error);
   }
