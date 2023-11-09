@@ -3,6 +3,7 @@ $(document).ready(function () {
   const container = $("#menti-container");
   const nameEl = $("#menti-name");
   const titleEl = $("#slide-title");
+  const typeEl = $("#slide-type");
   const imageEl = $("#menti-image");
   const choicesEl = $("#menti-choices");
   const prevBtn = $("#prev-slide");
@@ -17,6 +18,7 @@ $(document).ready(function () {
     prevBtn.prop("disabled", currentSlide === 0);
     nextBtn.prop("disabled", currentSlide === slides.length - 1);
     titleEl.text(slides[currentSlide].title);
+    typeEl.text(`Type: ${slides[currentSlide].type}`);
     imageEl.attr("src", slides[currentSlide].image);
     if (slides[currentSlide].choices) {
       const choices = slides[currentSlide].choices;
