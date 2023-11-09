@@ -3,9 +3,9 @@ const axios = require("axios");
 const path = require("path");
 
 fastify.register(require("@fastify/static"), {
-    root: path.join(__dirname, "static"),
-    prefix: "/static/",
-  });
+  root: path.join(__dirname, "static"),
+  prefix: "/static/",
+});
 
 const transformResponse = (response) => {
   let transformed = {};
@@ -20,8 +20,7 @@ const transformResponse = (response) => {
       type: value.type,
       image: value.question_image_url,
     };
-
-    if (value.choices.length > 0) {
+    if (value.choices.length > 0 && value.choices[0].label != "") {
       let choices = [];
       value.choices.map((options) => {
         choices.push(options.label);
@@ -31,7 +30,7 @@ const transformResponse = (response) => {
 
     transformed.slides.push(slide);
   });
-  
+
   return transformed;
 };
 
