@@ -21,7 +21,7 @@ const transformResponse = (response) => {
       image: value.question_image_url,
     };
 
-    if (slide.type == "quiz") {
+    if (value.choices.length > 0) {
       let choices = [];
       value.choices.map((options) => {
         choices.push(options.label);

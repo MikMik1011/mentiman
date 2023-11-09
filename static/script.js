@@ -18,7 +18,7 @@ $(document).ready(function () {
     nextBtn.prop("disabled", currentSlide === slides.length - 1);
     titleEl.text(slides[currentSlide].title);
     imageEl.attr("src", slides[currentSlide].image);
-    if (slides[currentSlide].type === "quiz") {
+    if (slides[currentSlide].choices) {
       const choices = slides[currentSlide].choices;
       choicesEl.html("");
       choices.forEach((choice) => {
